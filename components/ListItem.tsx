@@ -42,6 +42,8 @@ const ListItem: React.FC<ListItemProps> = ({
             relative
             min-h-[64px]
             min-w-[64px]
+            overflow-hidden
+            rounded-md
             ">
                 <Image 
                 className="object-cover"

@@ -5,9 +5,10 @@ import Sidebar from "@/components/Sidebar";
 import SupabaseProvider from "@/providers/SupabaseProvider";
 import UserProvider from "@/providers/UserProvider";
 import ModalProvider from "@/providers/ModalProvider";
+import ToasterProvider from "@/providers/ToasterProvider";
+import getSongsByUserId from "@/actions/getSongsByUserId";
 
 const font = Figtree({
-  variable: "--font-figtree",
   subsets: ["latin"],
 });
 
@@ -16,18 +17,25 @@ export const metadata: Metadata = {
   description: "Listen to music!",
 };
 
-export default function RootLayout({
+export const revalidate = 0;
+
+export default async function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
+  const userSongs = await getSongsByUserId();
+
   return (
-    <html lang="en" className={`${font.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col">
+    <html lang="en" className="h-full">
+      <body className={`${font.className} h-full`}>
+        <ToasterProvider />
         <SupabaseProvider>
           <UserProvider>
             <ModalProvider />
-            <Sidebar>{children}</Sidebar>
+              <Sidebar songs={userSongs}>
+              {children}
+              </Sidebar>
           </UserProvider>
         </SupabaseProvider>
       </body>

@@ -50,7 +50,7 @@ const upsertPriceRecord = async (price: Stripe.Price) => {
 
     const { error } = await supabaseAdmin
         .from('prices')
-        .upsert([priceData]);
+        .upsert(priceData);
 
     if (error) {
         throw error;
@@ -114,8 +114,8 @@ const copyBillingDetailsToCustomer = async (
         .update({
             billing_address: { ...address },
             payment_method: { ...payment_method[payment_method.type] }
-        });
-        .eq('id', uuid);
+        })
+        .eq('id', uuid)
 
         if (error) throw error;
 }

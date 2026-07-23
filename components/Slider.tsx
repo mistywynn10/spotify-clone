@@ -4,7 +4,7 @@ import * as RadixSlider from "@radix-ui/react-slider";
 
 interface SliderProps {
     value?: number;
-    onChange?: (value: number) => VoidFunction;
+    onChange?: (value: number) => void;
 };
 
 const Slider: React.FC<SliderProps> = ({
